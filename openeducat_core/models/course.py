@@ -20,6 +20,7 @@
 ###############################################################################
 
 from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class OpCourse(models.Model):
@@ -41,6 +42,16 @@ class OpCourse(models.Model):
                                     default=lambda self:
                                     self.env.user.dept_id.id)
     active = fields.Boolean(default=True)
+    start_date = fields.Date(
+        'Start Date')
+    end_date = fields.Date(
+        'End Date')
+
+    @api.constrains('start_date', 'end_date')
+    def _check_date_time(self):
+        if self.start_date > self.end_date:
+            raise ValidationError(
+                _('End Date cannot be set before Start Date.'))
 
     _sql_constraints = [
         ('unique_course_code',
