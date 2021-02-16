@@ -174,3 +174,6 @@ class OpStudent(models.Model):
             result['views'] = [(res and res.id or False, 'form')]
             result['res_id'] = inv_ids and inv_ids[0] or False
         return result
+
+
+

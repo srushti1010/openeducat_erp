@@ -31,13 +31,15 @@ class OpAttendanceLine(models.Model):
 
     attendance_id = fields.Many2one(
         'op.attendance.sheet', 'Attendance Sheet', required=True,
-        tracking=True, ondelete="cascade")
+        track_visibility="onchange", ondelete="cascade")
     student_id = fields.Many2one(
-        'op.student', 'Student', required=True, tracking=True)
+        'op.student', 'Student', required=True, track_visibility="onchange")
     present = fields.Boolean(
-        'Present ?', default=True, tracking=True)
+        'Present ?', default=True, track_visibility="onchange")
     excused = fields.Boolean(
-        'Excused ?', tracking=True)
+        'Absent Excused', track_visibility="onchange")
+    absent = fields.Boolean('Absent Unexcused', track_visibility="onchange")
+    late = fields.Boolean('Late', track_visibility="onchange")
     course_id = fields.Many2one(
         'op.course', 'Course',
         related='attendance_id.register_id.course_id', store=True,
@@ -46,16 +48,16 @@ class OpAttendanceLine(models.Model):
         'op.batch', 'Batch',
         related='attendance_id.register_id.batch_id', store=True,
         readonly=True)
-    remark = fields.Char('Remark', size=256, tracking=True)
+    remark = fields.Char('Remark', size=256, track_visibility="onchange")
     attendance_date = fields.Date(
         'Date', related='attendance_id.attendance_date', store=True,
-        readonly=True, tracking=True)
+        readonly=True, track_visibility="onchange")
     register_id = fields.Many2one(
         related='attendance_id.register_id', store=True)
     active = fields.Boolean(default=True)
     attendance_type_id = fields.Many2one(
         'op.attendance.type', 'Attendance Type',
-        required=False, tracking=True)
+        required=False, track_visibility='onchange')
 
     _sql_constraints = [
         ('unique_student',
@@ -68,3 +70,33 @@ class OpAttendanceLine(models.Model):
         if self.attendance_type_id:
             self.present = self.attendance_type_id.present
             self.excused = self.attendance_type_id.excused
+            self.absent = self.attendance_type_id.absent
+            self.late = self.attendance_type_id.late
+
+    @api.onchange('present')
+    def onchange_present(self):
+        if self.present:
+            self.late = False
+            self.excused = False
+            self.absent = False
+
+    @api.onchange('absent')
+    def onchange_absent(self):
+        if self.absent:
+            self.present = False
+            self.late = False
+            self.excused = False
+
+    @api.onchange('excused')
+    def onchange_excused(self):
+        if self.excused:
+            self.present = False
+            self.late = False
+            self.absent = False
+
+    @api.onchange('late')
+    def onchange_late(self):
+        if self.late:
+            self.present = False
+            self.excused = False
+            self.absent = False

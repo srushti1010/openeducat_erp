@@ -21,7 +21,7 @@
 
 {
     'name': 'OpenEduCat Attendance',
-    'version': '14.0.1.0',
+    'version': '14.0',
     'license': 'LGPL-3',
     'category': 'Education',
     "sequence": 3,
@@ -34,7 +34,6 @@
         'security/op_security.xml',
         'security/ir.model.access.csv',
         'data/attendance_sheet_sequence.xml',
-        'wizards/attendance_import_view.xml',
         'wizards/student_attendance_wizard_view.xml',
         'views/attendance_register_view.xml',
         'views/attendance_sheet_view.xml',
