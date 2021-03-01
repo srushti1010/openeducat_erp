@@ -28,18 +28,6 @@ class OpAttendanceSheet(models.Model):
     _description = "Attendance Sheet"
     _order = "attendance_date desc"
 
-    @api.depends('attendance_line.present')
-    def _compute_total_present(self):
-        for record in self:
-            record.total_present = self.env['op.attendance.line'].search_count(
-                [('present', '=', True), ('attendance_id', '=', record.id)])
-
-    @api.depends('attendance_line.present')
-    def _compute_total_absent(self):
-        for record in self:
-            record.total_absent = self.env['op.attendance.line'].search_count(
-                [('present', '=', False), ('attendance_id', '=', record.id)])
-
     name = fields.Char('Name', readonly=True, size=32)
     register_id = fields.Many2one(
         'op.attendance.register', 'Register', required=True,
