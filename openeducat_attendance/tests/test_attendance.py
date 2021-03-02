@@ -56,7 +56,7 @@ class TestAttendanceSheet(TestAttendanceCommon):
             record.attendance_start()
             record.attendance_done()
             record.attendance_cancel()
-            
+
 
 class TestAttendanceLine(TestAttendanceCommon):
 

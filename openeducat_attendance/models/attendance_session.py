@@ -51,7 +51,8 @@ class OpSession(models.Model):
                     'target': 'current',
                     'res_id': sheet.id,
                     'context': {'default_session_id': self.id,
-                                'default_register_id': [rec.id for rec in register]},
+                                'default_register_id':
+                                    [rec.id for rec in register]},
                     'domain': [('session_id', "=", sheet.session_id.id)]
                 }
 
@@ -76,6 +77,7 @@ class OpSession(models.Model):
                 'type': 'ir.actions.act_window',
                 'target': 'current',
                 'context': {'default_session_id': self.id,
-                            'default_register_id': [rec.id for rec in register]},
+                            'default_register_id':
+                                [rec.id for rec in register]},
                 'domain': [('session_id', "=", self.id)]
             }
