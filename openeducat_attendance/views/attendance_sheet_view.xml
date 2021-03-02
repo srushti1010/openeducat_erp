@@ -11,8 +11,6 @@
                     <field name="name"/>
                     <field name="session_id"/>
                     <field name="attendance_date"/>
-<!--                    <field name="total_present"/>-->
-<!--                    <field name="total_absent"/>-->
                 </tree>
             </field>
         </record>
@@ -65,8 +63,6 @@
                                     <field name="remark"/>
                                 </tree>
                             </field>
-<!--                            <field name="total_present"/>-->
-<!--                            <field name="total_absent"/>-->
                         </group>
                     </sheet>
                     <div class="oe_chatter">
@@ -85,8 +81,6 @@
                 <search string="Attendance Sheet">
                     <field name="register_id"/>
                     <field name="attendance_date"/>
-<!--                    <field name="total_present"/>-->
-<!--                    <field name="total_absent"/>-->
                     <newline/>
                     <filter string="Today" name="filter_attendance_today"
                             domain="[('attendance_date', '=', context_today().strftime('%Y-%m-%d'))]"/>

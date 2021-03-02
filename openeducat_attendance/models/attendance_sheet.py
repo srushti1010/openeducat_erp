@@ -44,12 +44,6 @@ class OpAttendanceSheet(models.Model):
         track_visibility="onchange")
     attendance_line = fields.One2many(
         'op.attendance.line', 'attendance_id', 'Attendance Line')
-    # total_present = fields.Integer(
-    #     'Total Present', compute='_compute_total_present',
-    #     track_visibility="onchange")
-    # total_absent = fields.Integer(
-    #     'Total Absent', compute='_compute_total_absent',
-    #     track_visibility="onchange")
     faculty_id = fields.Many2one('op.faculty', 'Faculty')
     active = fields.Boolean(default=True)
 
